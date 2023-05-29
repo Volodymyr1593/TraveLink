@@ -1,0 +1,57 @@
+﻿@model NewMVCProjekt.Models.AppUserViewModel
+
+
+
+
+
+<div class="container text-center bg-light    ">   
+ 
+
+    <form class="row g-3 needs-validation" novalidate asp-controller="Authentication" asp-action="Registration" method="post">
+  <div class="col-md-6 ">
+    <label for="validationCustom01" class="control-label">First name</label>
+    <input asp-for="FirstName"  class="form-control"   >
+    <span  asp-validation-for="FirstName" class=text-danger  ></span>
+   
+  </div>
+  <div class="col-md-6">
+    <label for="validationCustom02" class="control-label">Last name</label>
+    <input asp-for="LastName"  class="form-control"   >
+     <span  asp-validation-for="LastName" class=text-danger ></span>
+     </div>
+  <div class="col-md-6">
+    <label for="validationCustom03" class="contro-label">Username</label>
+   <input asp-for="UserName"  class="form-control"   >
+    <span asp-validation-for="UserName" class=text-danger  ></span>
+  </div>
+
+  <div class="col-md-6">
+    <label for="validationCustom04" class="control-label">Email</label>
+    <input asp-for="Email"  class="form-control" >
+     <span  asp-validation-for="Email" class=text-danger  ></span>
+   
+  </div>
+  <div class="col-md-6">
+    <label for="validationCustom05" class="control-label">Phone number</label>
+   <input asp-for="PhoneNumber"  class="form-control"  >
+   <span  asp-validation-for="PhoneNumber" class=text-danger  ></span>
+    </div>
+  <div class="col-md-6">
+    <label for="validationCustom05" class="control-label">Password</label>
+   <input asp-for="Password"  class="form-control" >
+   <span  asp-validation-for="Password" class=text-danger  ></span>
+   </div>
+
+
+  <div   class="col-md-6">
+    <label for="validationCustom06" class="form-label">Password Confirmd</label>
+    <input asp-for="PasswordConfirmd"  class="form-control" id="validationCustom05" >
+    <span  asp-validation-for="PasswordConfirmd" class=text-danger  ></span>
+   </div>
+ 
+  <div class="col-12">
+    <button class="btn btn-primary" type="submit">Submit form</button>
+  </div>
+</form>
+    
+  </div>
