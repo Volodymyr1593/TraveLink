@@ -1,13 +1,12 @@
 ﻿global using NewMVCProjekt.Data;
 global using NewMVCProjekt;
-global using MySql.Data.EntityFrameworkCore;
-global using Microsoft.EntityFrameworkCore.Storage.Internal;
+global using Microsoft.AspNetCore.Authentication;
+global using Microsoft.AspNetCore.Http.Headers;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.AspNetCore.Mvc;
 global using NewMVCProjekt.Models;
 global using System.ComponentModel.DataAnnotations;
 global using Microsoft.AspNetCore.Identity;
-global using NewMVCProjekt.Traningclases;
 global using Microsoft.AspNetCore.Authorization;
 global using System.Security.Claims;
 global using System.Runtime.InteropServices;
@@ -21,6 +20,11 @@ global using BCrypt.Net;
 global using Microsoft.IdentityModel.Tokens;
 global using NewMVCProjekt.Types;
 global using NewMVCProjekt.Servises;
+global using NewMVCProjekt.Middleware;
+global using Microsoft.Extensions.Logging;
+global using Karambolo.Extensions.Logging.File;
+global  using Microsoft.AspNetCore.NodeServices;
+
 
 
 
@@ -55,8 +59,29 @@ global using NewMVCProjekt.Servises;
 
 //var response = new
 //{
-  //  access_token = Usertoken,
-  //  username = user.Email
+//  access_token = Usertoken,
+//  username = user.Email
 //};
 
 //ViewBag.Token = response;
+//Response.Headers.Add("Authorization", "Bearer " + Usertoken);
+
+
+
+//string authorizationHeader = "Bearer " + Usertoken;
+//string redirectUrl = "https://localhost:7182/Authentication/Useracount";
+
+//Створення об'єкту HttpClient
+// var httpClient = new HttpClient();
+
+// Додавання заголовка Authorization до запиту
+//httpClient.DefaultRequestHeaders.Add("Authorization", authorizationHeader);
+
+// Виконання GET-запиту
+//var response = httpClient.GetAsync(redirectUrl).Result;
+
+// Повернення відповіді сервера
+//return Content(response.Content.ReadAsStringAsync().Result, "text/html");
+
+// HttpContext.Request.Headers.Add("Authorization", authorizationHeader);
+//return RedirectToAction("Useracount");

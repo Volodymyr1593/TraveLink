@@ -26,7 +26,7 @@ namespace NewMVCProjekt.Models
         [NotMapped]
 
 
-        public string? Password { get; set; }
+        public string? Password{ get; set; }
 
         [Phone]
         public override string? PhoneNumber { get; set; }

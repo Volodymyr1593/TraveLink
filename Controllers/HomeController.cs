@@ -9,9 +9,9 @@ namespace NewMVCProjekt.Controllers
        public class HomeController : Controller
 
     {
-        private readonly ILogger<Authenticationcontroller> logger;
+        private readonly ILogger<HomeController> logger;
 
-        public HomeController(ILogger<Authenticationcontroller> logger)
+        public HomeController(ILogger<HomeController> logger)
         {
             this.logger = logger;
         }   
@@ -23,17 +23,45 @@ namespace NewMVCProjekt.Controllers
 
 
 
-        // private static List<UserViewModel> Users = new List<UserViewModel>();
+        
         public IActionResult Index()
         {
-           return View();
-       }
+            var path = HttpContext.Request.Path;
 
-      // public IActionResult SignIn()
-      //  {
-      //      return View();
-       // }
 
+            if (path == "/Identity/RefreshToken")
+            {
+
+
+
+
+
+
+
+
+
+
+
+               string message = "SessionExpiredMessage. Your session has expired. Please log in again.";
+
+                // Зберегти оповіщення в TempData
+                 TempData["Message"] = message;
+                // //
+
+                // Очистити оповіщення з TempData, щоб воно не було доступне в наступному запиті
+                //TempData.Remove("Message");
+
+
+                return View();
+            }
+
+            return View();
+
+
+        }
+
+
+      
       
 
 

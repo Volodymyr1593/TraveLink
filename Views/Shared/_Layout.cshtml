@@ -19,20 +19,48 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        
-                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Authentication" asp-action="Index">Sign in</a>
+
+                
+                           @if (!string.IsNullOrEmpty(Context.Session.GetString("AuthToken")))
+                           {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="userAccountDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    User Account
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="userAccountDropdown">
+                                    <li><a class="dropdown-item" asp-controller="Identity" asp-action="UserAcount">Profile</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Identity" asp-action="LogOut">LogOut</a></li>
+                                </ul>
+                            </li>
+                            }
+                               
+                            
+                          
+                           
+
+                           <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Identity" asp-action="Index">Sign in</a>
                         </li>
                        <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Hotels" asp-action="Index">Hotels</a>
                         </li>
                     </ul>
-
+                    
+                               
+                            
                 </div>
             </div>
         </nav>
     </header>
     <div class="container">
+        @if (TempData["Message"]!= null ){
+        <div class="text-right ">
+           <div class="alert alert-success">@TempData["Message"]</div>
+          </div>
+        }
+
+
+
         <main role="main" class="pb-3">
             @RenderBody()
         </main>

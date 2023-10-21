@@ -4,6 +4,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
+// Add services to the container.
 builder.Services.AddDbContext<ApplicationDbContext>(
 
   options =>
@@ -14,12 +15,73 @@ builder.Services.AddDbContext<ApplicationDbContext>(
 
   );
 
-// Add services to the container.
+
+builder.Logging.AddFile(options =>
+
+{ options.RootPath = builder.Environment.ContentRootPath;
+    options.BasePath = "Logs";
+    options.DateFormat = "yyyyMMdd";
+    options.CounterFormat = "000";
+    options.FileAccessMode = LogFileAccessMode.KeepOpenAndAutoFlush;
+    options.FileEncoding = Encoding.UTF8;
+    options.MaxFileSize = 10485760;
+    options.IncludeScopes = true;
+    options.MaxQueueSize = 100;
+    options.Files = new[]
+     {
+
+      
+        new LogFileOptions
+        {
+            Path =  "<date:yyyy>/<date:MM>/<counter>.log"
+        }
+     };
+
+
+
+}
+
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddMvc();
-builder.Services.AddSingleton<IAutenticnterface, Tokenservis>();
-builder.Services.AddSingleton<Itime, Servicetime>();
+builder.Services.AddSession(options =>
+{
+    options.Cookie.Name = "YourSessionCookieName";
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+    
+    
+
+});
+
+builder.Services.AddTransient<NodeServiceScraper>();
+builder.Services.AddNodeServices();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddTransient<IAccessTokenService, TokenService>();
+builder.Services.AddScoped<IRefreshTokenService, RefreshTokenService>();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -32,14 +94,17 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
             IssuerSigningKey = Consts.GetSummetricKey()
+
+
             
 
         };
     });
 builder.Services.AddAuthorization();
- 
- 
- 
+;
+
+
+
 
 
 
@@ -59,7 +124,22 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseSession();
 
+
+app.Use(async (context, next) =>
+{
+    string? authorizationHeader = context.Session.GetString("AuthToken");
+    if (!string.IsNullOrEmpty(authorizationHeader))
+    {
+        context.Request.Headers.Add("Authorization", authorizationHeader);
+        
+    }
+    
+    await next();
+});
+
+app.UseMiddleware<TokenChackMiddleware>();
 app.UseAuthentication();   
 
 app.UseAuthorization();
@@ -67,6 +147,7 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
 
 app.Run();
 

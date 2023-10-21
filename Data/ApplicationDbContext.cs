@@ -9,13 +9,19 @@ namespace NewMVCProjekt.Data
         {
         }
 
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options):base(options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
-                
+
         }
         public DbSet<AppUserViewModel> aspnetusers { get; set; }
-        
-       
+        public DbSet<UserRefreshToken> aspnetusertokens{ get; set;}
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<UserRefreshToken>()
+                .HasKey(t => new { t.LoginProvider, t.UserId,t.Name });
+        }
     }
 
 
