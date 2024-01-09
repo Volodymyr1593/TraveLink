@@ -23,8 +23,9 @@
 
 
 
-    } 
+    }
 
-
+   // builder.Services.AddTransient<NodeServiceScraper>();
+   // builder.Services.AddNodeServices();
 
 }

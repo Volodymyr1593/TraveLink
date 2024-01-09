@@ -77,8 +77,7 @@ builder.Services.AddSession(options =>
 
 });
 
-builder.Services.AddTransient<NodeServiceScraper>();
-builder.Services.AddNodeServices();
+
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddTransient<IAccessTokenService, TokenService>();
 builder.Services.AddScoped<IRefreshTokenService, RefreshTokenService>();
