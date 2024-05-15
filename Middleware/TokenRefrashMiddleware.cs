@@ -1,4 +1,4 @@
-﻿namespace NewMVCProjekt.Middleware
+﻿namespace TraveLink.Middleware
 {
     public class TokenChackMiddleware
     {

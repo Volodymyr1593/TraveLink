@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using NewMVCProjekt.Models;
-namespace NewMVCProjekt.Data
+using TraveLink.Models;
+namespace TraveLink.Data
 {
     public class ApplicationDbContext : IdentityDbContext<AppUserViewModel>
     {
@@ -15,6 +15,8 @@ namespace NewMVCProjekt.Data
         }
         public DbSet<AppUserViewModel> aspnetusers { get; set; }
         public DbSet<UserRefreshToken> aspnetusertokens{ get; set;}
+        public DbSet<HotelViewModel> hotels { get; set; }
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

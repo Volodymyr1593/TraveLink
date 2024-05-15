@@ -1,9 +1,46 @@
 ﻿
-@model NewMVCProjekt.Models.HotelViewModel
+@model TraveLink.Models.HotelViewModel
 
 
 
-<p> @Model.Name  this the best hotel </p>  
-<h1> @Model.Id in the base         </h1>
+    
+ <div class="container-fluid">  
 
-     
+    <div class="col text-center ">
+     <img src="@Model.GetFotos()" style="widh 70%" />
+
+
+
+
+    </div>
+   <div class=" col">
+    <div class="container">
+    <div style="  display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;">
+
+   @{
+
+
+       foreach( string url in Model.GetFotosList() ){
+
+
+
+          <img src="@url" alt="Description" style="width: 200px; height: 150px;">
+
+
+
+
+       }
+
+
+
+
+
+
+   }
+
+        </div>
+     </div>
+   </div>
+}</div>  

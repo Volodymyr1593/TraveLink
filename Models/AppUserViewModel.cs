@@ -1,7 +1,7 @@
 ﻿
 
 
-namespace NewMVCProjekt.Models
+namespace TraveLink.Models
 {
     public class AppUserViewModel : IdentityUser
 

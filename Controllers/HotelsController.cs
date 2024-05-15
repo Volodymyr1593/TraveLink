@@ -1,22 +1,26 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using NewMVCProjekt.Models;
+using TraveLink.Models;
 
-namespace NewMVCProjekt.Controllers
+namespace TraveLink.Controllers
 {
+    
     public class HotelsController : Controller
-    {
-
-
-        public IActionResult Index()
+    { 
+        public HotelsController(ApplicationDbContext context)
+        {
+            this.context = context; 
+        }
+        public readonly ApplicationDbContext context;
+        public async Task <IActionResult> Index( int? id, HotelViewModel model)
         {
 
-            HotelViewModel Redison = new HotelViewModel()
-            { Id = 3, Name = "REDISON" };
+           
+            model = await context.hotels.FindAsync(id);
 
+            
 
-
-
-            return View(Redison);
+            
+            return View(model);
 
 
 

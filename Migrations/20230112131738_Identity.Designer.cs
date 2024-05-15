@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using NewMVCProjekt.Data;
+using TraveLink.Data;
 
 #nullable disable
 
-namespace NewMVCProjekt.Migrations
+namespace TraveLink.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     [Migration("20230112131738_Identity")]

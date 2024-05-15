@@ -1,4 +1,4 @@
-﻿namespace NewMVCProjekt.Models
+﻿namespace TraveLink.Models
 {
     public class UserRefreshToken
     {

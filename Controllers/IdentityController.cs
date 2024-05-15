@@ -2,7 +2,7 @@
 using BCrypt.Net;
 
 
-namespace NewMVCProjekt.Controllers
+namespace TraveLink.Controllers
 {
     public class Identitycontroller : Controller
     {

@@ -1,20 +1,23 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using NewMVCProjekt.Models;
+using TraveLink.Models;
 using System.Diagnostics;
-using NewMVCProjekt.Data;
+using TraveLink.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace NewMVCProjekt.Controllers
+namespace TraveLink.Controllers
 {
        public class HomeController : Controller
 
     {
         private readonly ILogger<HomeController> logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        private readonly HotelListingService hotelList;
+
+        public HomeController(ILogger<HomeController> logger, HotelListingService hotelList)
         {
             this.logger = logger;
-        }   
+            this.hotelList = hotelList;
+        }
 
 
 
@@ -23,24 +26,26 @@ namespace NewMVCProjekt.Controllers
 
 
 
-        
-        public IActionResult Index()
+
+        public async Task <IActionResult> Index(int? page)
         {
+            var _page = page ?? 1;
+            var Totalpage = await hotelList.GetTotalHotels();
+
+            ViewData["Totalpage"] = Totalpage;
+
+            
+            if (_page < 1)
+            {
+                _page = 1;
+            }
+
+
             var path = HttpContext.Request.Path;
 
 
             if (path == "/Identity/RefreshToken")
             {
-
-
-
-
-
-
-
-
-
-
 
                string message = "SessionExpiredMessage. Your session has expired. Please log in again.";
 
@@ -54,8 +59,14 @@ namespace NewMVCProjekt.Controllers
 
                 return View();
             }
+            else
+            {
+                List<HotelViewModel> list = await hotelList.GetHotelViewModels(_page); 
 
-            return View();
+                return View(list);
+
+            }
+           
 
 
         }

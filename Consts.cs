@@ -1,4 +1,4 @@
-﻿namespace NewMVCProjekt
+﻿namespace TraveLink
 {
     public static class Consts
     {

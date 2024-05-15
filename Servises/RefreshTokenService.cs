@@ -1,4 +1,4 @@
-﻿namespace NewMVCProjekt.Servises
+﻿namespace TraveLink.Servises
 {
     public class RefreshTokenService: IRefreshTokenService
     {

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace NewMVCProjekt.Migrations
+namespace TraveLink.Migrations
 {
     public partial class Identity : Migration
     {
