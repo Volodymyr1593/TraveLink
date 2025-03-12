@@ -1,0 +1,100 @@
+﻿@model TraveLink.Models.HotelViewModel
+
+
+
+    
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <div class="card" style="width:100%; height:1500px;">
+                <img class="text-center" src="@Model.GetFotos()" style="width:100%; height:300px;" />
+                <h1 class="text-center" style="font-size:10px; margin-bottom:10px">@Model.title</h1>
+                <p style="margin-bottom:20px">Address: @Model.address</p>
+                <p style="margin-bottom:20px">@Model.description</p>
+                <p style="margin-bottom:10px">Facilities: @Model.facilities</p>
+
+                <div class="card-body d-flex justify-content-center">
+                    <form asp-controller="Hotels" asp-action="SearchInHotel" method="post" asp-route-id="@Model.hotels_id"  >
+                        <div class="form-group text-center">
+                            <label for="checkInDate">Check In Date:</label>
+                            <input asp-for="reserveModel.checkindate" type="date" class="form-control" id="checkInDate">
+                        </div>
+                        <div class="form-group text-center">
+                            <label for="checkOutDate">Check Out Date:</label>
+                            <input asp-for="reserveModel.checkoutdate" type="date" class="form-control" id="checkOutDate">
+                        </div>
+                        <div class="form-group text-center">
+                            <label for="adult">Adult:</label>
+                            <input asp-for="reserveModel.adult" class="form-control" id="adult">
+                        </div>
+                        <div class="form-group text-center" style="margin-bottom:8px">
+                            <label for="children">Children:</label>
+                            <input asp-for="reserveModel.children" class="form-control" id="children">
+                        </div>
+                        <div class="form-group text-center">
+                            <label for="room">Room:</label>
+                            <input asp-for="reserveModel.room" class="form-control" id="room">
+                        </div>
+                        <input asp-for="url" type="hidden">
+                        <div class="d-flex justify-content-center align-items-center">
+                            <button type="submit" class="btn btn-dark">Reserve</button>
+                        </div>
+                    </form>
+                </div>
+
+               
+            </div>
+        </div>
+
+        <div class="col-7">
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px;">
+               
+               @foreach (string url in Model.GetFotosList())
+                {   
+                    <img src="@url" alt="Description" style="width: 200px; height: 150px;" />
+                
+                }
+
+            </div>
+        </div>
+
+
+
+
+
+         @if (Model.roomDataModels != null)
+                {
+                    foreach (HotelRoomData roomData in Model.roomDataModels)
+                    {
+                        if (roomData != null)
+                        {
+                            <ul>
+                                <li>Room Type: @roomData.roomtype</li>
+                                <li>Condition:
+                                    @if (roomData.conditions != null)
+                                    {
+                                        foreach (var condition in roomData.conditions)
+                                        {
+                                            <li>@condition</li>
+                                        }
+                                    }
+                                </li>
+                                <li>Guests:
+                                    @if (roomData.gests != null)
+                                    {
+                                        foreach (var gest in roomData.gests)
+                                        {
+                                            <li>@gest</li>
+                                        }
+                                    }
+                                </li>
+                               
+                                <li>Price:@roomData.todayprice </li>
+                                   
+                               
+                            </ul>
+                        }
+                    }
+                }
+    </div>
+</div>

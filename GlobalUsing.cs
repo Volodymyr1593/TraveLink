@@ -1,5 +1,6 @@
 ﻿global using TraveLink.Data;
 global using TraveLink;
+global using TraveLink.Services;
 global using Microsoft.AspNetCore.Authentication;
 global using Microsoft.AspNetCore.Http.Headers;
 global using Microsoft.EntityFrameworkCore;
@@ -25,6 +26,11 @@ global using Microsoft.Extensions.Logging;
 global using Karambolo.Extensions.Logging.File;
 global  using Microsoft.AspNetCore.NodeServices;
 global using System.Text.RegularExpressions;
+global using HtmlAgilityPack;
+global using System.Web;
+global using System.Net;
+global using Newtonsoft.Json;
+
 
 
 

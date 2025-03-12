@@ -6,6 +6,7 @@ namespace TraveLink.Models
     public class AppUserViewModel : IdentityUser
 
     {
+        public override string? Id { get; set; }
         [Required(ErrorMessage = "Enter  User Name ")]
         [StringLength(30)]
         public override string? UserName { get; set; }
@@ -30,7 +31,13 @@ namespace TraveLink.Models
 
         [Phone]
         public override string? PhoneNumber { get; set; }
-
+        
+        [NotMapped]
+         public HotelRoomData? OrederData { get; set; }
+        [NotMapped]
+         public SearchReserveModel? SearchData { get; set; }
+        [NotMapped]
+        public virtual ICollection<BookingModel>? Bookings { get; set; }
 
         [NotMapped]
         [UIHint("Password")]

@@ -13,13 +13,20 @@
         public string? hoteltype { get; set; }
         public string? photoslink { get; set; }
         public byte? stars { get; set; }
+        [NotMapped]
+        public SearchReserveModel? reserveModel { get; set; }
+        [NotMapped]
+        public List <HotelRoomData>? roomDataModels { get; set; }
+        [NotMapped]
+        public HotelRoomData? reserveData { get; set; }
 
+        
         public string GetFotos()
         {
 
 
             StringBuilder sb = new StringBuilder();
-            string key = @"thumb_url:\s*'([^']*)'";
+            string key = @"large_url:\s*'([^']*)'";
 
             string Text = photoslink;
 

@@ -1,0 +1,30 @@
+﻿info: Microsoft.AspNetCore.Hosting.Diagnostics[2] @ 2024-10-28T16:05:42.1525390+02:00
+      => SpanId:dcc37e9b5c9bcd6c, TraceId:730127151ba526f176d40164b8011c2c, ParentId:0000000000000000 => RequestPath:/_vs/browserLink RequestId:8000002e-0002-fc00-b63f-84710c7967bb
+      Request finished HTTP/2 GET https://localhost:44360/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 118.1148ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1] @ 2024-10-28T16:06:58.0965281+02:00
+      => SpanId:7706b07bec65eb11, TraceId:bedd9ae316f46cc24cfe2b5624357671, ParentId:0000000000000000 => RequestPath:/NewMVCProjekt.styles.css RequestId:80000049-0003-fc00-b63f-84710c7967bb
+      Request starting HTTP/2 GET https://localhost:44360/NewMVCProjekt.styles.css - -
+trce: Microsoft.AspNetCore.HostFiltering.HostFilteringMiddleware[AllHostsAllowed] @ 2024-10-28T16:06:58.0966666+02:00
+      => SpanId:7706b07bec65eb11, TraceId:bedd9ae316f46cc24cfe2b5624357671, ParentId:0000000000000000 => RequestPath:/NewMVCProjekt.styles.css RequestId:80000049-0003-fc00-b63f-84710c7967bb
+      All hosts are allowed.
+dbug: Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware[FileNotFound] @ 2024-10-28T16:06:58.0968841+02:00
+      => SpanId:7706b07bec65eb11, TraceId:bedd9ae316f46cc24cfe2b5624357671, ParentId:0000000000000000 => RequestPath:/NewMVCProjekt.styles.css RequestId:80000049-0003-fc00-b63f-84710c7967bb
+      The request path /NewMVCProjekt.styles.css does not match an existing file
+dbug: Microsoft.AspNetCore.Routing.Matching.DfaMatcher[CandidatesNotFound] @ 2024-10-28T16:06:58.0969419+02:00
+      => SpanId:7706b07bec65eb11, TraceId:bedd9ae316f46cc24cfe2b5624357671, ParentId:0000000000000000 => RequestPath:/NewMVCProjekt.styles.css RequestId:80000049-0003-fc00-b63f-84710c7967bb
+      No candidates found for the request path '/NewMVCProjekt.styles.css'
+dbug: Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware[MatchFailure] @ 2024-10-28T16:06:58.0969617+02:00
+      => SpanId:7706b07bec65eb11, TraceId:bedd9ae316f46cc24cfe2b5624357671, ParentId:0000000000000000 => RequestPath:/NewMVCProjekt.styles.css RequestId:80000049-0003-fc00-b63f-84710c7967bb
+      Request did not match any endpoints
+trce: Microsoft.AspNetCore.DataProtection.KeyManagement.KeyRingBasedDataProtector[PerformingUnprotectOperationToKeyWithPurposes] @ 2024-10-28T16:06:58.0970902+02:00
+      => SpanId:7706b07bec65eb11, TraceId:bedd9ae316f46cc24cfe2b5624357671, ParentId:0000000000000000 => RequestPath:/NewMVCProjekt.styles.css RequestId:80000049-0003-fc00-b63f-84710c7967bb
+      Performing unprotect operation to key {ece34512-0900-41f2-b967-dbc6b04795f9} with purposes ('D:\.NET\ASP.NET.projekts\MVC\1.Pr.(TraveLink)\TravelLink\', 'SessionMiddleware').
+dbug: Microsoft.AspNetCore.Session.DistributedSession[SessionLoaded] @ 2024-10-28T16:06:58.0981464+02:00
+      => SpanId:7706b07bec65eb11, TraceId:bedd9ae316f46cc24cfe2b5624357671, ParentId:0000000000000000 => RequestPath:/NewMVCProjekt.styles.css RequestId:80000049-0003-fc00-b63f-84710c7967bb
+      Session loaded; Key:91a83b81-b9c7-30e8-ed05-5e922e953c39, Id:88058f12-f010-a22a-3488-799c84b60779, Count:1
+dbug: Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler[AuthenticationSchemeNotAuthenticated] @ 2024-10-28T16:06:58.1005026+02:00
+      => SpanId:7706b07bec65eb11, TraceId:bedd9ae316f46cc24cfe2b5624357671, ParentId:0000000000000000 => RequestPath:/NewMVCProjekt.styles.css RequestId:80000049-0003-fc00-b63f-84710c7967bb
+      AuthenticationScheme: Bearer was not authenticated.
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2] @ 2024-10-28T16:06:58.1009918+02:00
+      => SpanId:7706b07bec65eb11, TraceId:bedd9ae316f46cc24cfe2b5624357671, ParentId:0000000000000000 => RequestPath:/NewMVCProjekt.styles.css RequestId:80000049-0003-fc00-b63f-84710c7967bb
+      Request finished HTTP/2 GET https://localhost:44360/NewMVCProjekt.styles.css - - - 404 - - 4.6403ms

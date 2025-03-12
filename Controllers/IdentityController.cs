@@ -11,12 +11,14 @@ namespace TraveLink.Controllers
         private readonly ApplicationDbContext context;
         private readonly IAccessTokenService token;
         private readonly IRefreshTokenService refreshToken;
+        private readonly IUserService userService;
 
-        public Identitycontroller(ApplicationDbContext context, IAccessTokenService token, IRefreshTokenService refreshToken)
+        public Identitycontroller(ApplicationDbContext context, IAccessTokenService token, IRefreshTokenService refreshToken, IUserService userService)
         {
             this.context = context;
             this.token = token;
             this.refreshToken = refreshToken;
+            this.userService = userService; 
         }
 
 
@@ -194,12 +196,34 @@ namespace TraveLink.Controllers
 
 
         [Authorize]
-        public IActionResult UserAcount()
+        public async Task <IActionResult> UserAcount(HotelViewModel? model)
 
         {
-            var Users = context.aspnetusers.OrderBy(p => p.Id).Last();
+            var userModel = userService.GetUserInform() ?? new AppUserViewModel();
+            var searchData = userService.GetSearchInform()??new SearchReserveModel() ;
+            userModel.OrederData = model?.reserveData?? new HotelRoomData();
+            userModel.SearchData = searchData;
+            await userService.SaveOrder(userModel);
+            userModel = await userService.GetOrder(userModel);
 
-            return View(Users);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            return View(userModel);
         }
 
 
