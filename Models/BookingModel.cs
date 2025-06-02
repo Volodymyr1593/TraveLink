@@ -10,7 +10,7 @@
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("id")]
         public int Id { get; set; }
-        [Column("id")]
+        [Column("hotel_id")]
         public int? Hotel_Id{ get; set; }
         [Column("user_id")]
         public string? UserId { get; set; }

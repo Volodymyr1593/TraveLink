@@ -199,13 +199,16 @@
                                                                    
                                   <ul>
                                         
+                                      @if(roomData.gests!=null)
 
-
-                                        @foreach (var gest in roomData.gests)
+                                       { @foreach (var gest in roomData.gests)
                                         {
                                             <li > @HttpUtility.HtmlDecode(gest)<br></li>
+                                        
                                         }
-                                    </ul>   
+                                       }
+                                    </ul>
+                                    
 
                                 </td>
 
@@ -214,12 +217,13 @@
 
                                 <td style="border: 1px solid black;font-size:12px;font-family:Verdana,sans-serif">
 
-                                    <ul> 
+                                    <ul> @if(roomData.conditions!=null){
                                         @foreach (var condition in roomData.conditions)
                                         {
                                             <li > @HttpUtility.HtmlDecode(condition)<br/>  <br/>  <br/></li>
 
                                         }
+                                    }
                                     </ul>   
 
                                 </td>

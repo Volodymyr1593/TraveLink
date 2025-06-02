@@ -65,7 +65,41 @@
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-       
+        public string GenAccessToken(AppUserViewModel model, string role)
+
+
+        {
+
+
+
+            List<Claim> claims = new List<Claim>
+             {
+
+
+             new Claim (JwtRegisteredClaimNames.Name,model.UserName),
+              new Claim (JwtRegisteredClaimNames.Email,model.Email),
+              new Claim(ClaimTypes.Role,role  )
+             };
+
+
+
+            SymmetricSecurityKey key = Consts.GetSummetricKey();
+
+
+
+            SigningCredentials signingCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            JwtSecurityToken token = new JwtSecurityToken(
+            issuer: Consts.issuer,
+            audience: Consts.audience,
+            claims: claims,
+            notBefore: DateTime.Now,
+            expires: DateTime.Now.AddMinutes(55),
+            signingCredentials
+
+           );
+            // this.token = token;
+            return new JwtSecurityTokenHandler().WriteToken(token);
+        }
 
         public bool AccessTokenValid(string CurrentAccesstoken)
 
@@ -111,12 +145,7 @@
             }
         }
 
-
-
-        
-
-
-        public TimeSpan AccessTokenLiveTime(string CurrenAccessttoken)
+        public TimeSpan  AccessTokenLiveTime(string CurrenAccessttoken)
         {
             const string bearerPrefix = "Bearer ";
             if (CurrenAccessttoken.StartsWith(bearerPrefix))
@@ -144,7 +173,7 @@
 
         }
 
-        
+       
 
     }
 }

@@ -165,14 +165,33 @@
 
 
 
-
-
-
-
-
-
         }
+
+        public UserRefreshToken GetUserRefreshToken(string refreshToken, AppUserViewModel user)
+        {
+
+
+
+
+            UserRefreshToken UserRefreshToken = new UserRefreshToken
+            {
+                UserId = user.Id,
+                LoginProvider = "local",
+                Name = "refresh_token",
+                Value = refreshToken
+            };
+
+
+
+
+            return UserRefreshToken;
+        }
+
+
+
+
     }
+
 
 
 

@@ -159,19 +159,14 @@ namespace TraveLink.Controllers
 
             if (user != null && BCrypt.Net.BCrypt.Verify(model.Password, user.PasswordHash))
             {
-                var Usertoken = token.GenAccessToken(user);
-                var RefreshToken = refreshToken.GenRefreshToken(user);
-                 
-                UserRefreshToken UserRefreshToken = new UserRefreshToken
-                 {
-                    UserId = user.Id,
-                    LoginProvider = "local", 
-                    Name = "refresh_token",
-                    Value = RefreshToken
-                };
-                await context.aspnetusertokens.AddAsync(UserRefreshToken);
+                var userToken = token.GenAccessToken(user);
+                var refreshTokenValue = refreshToken.GenRefreshToken(user);
+
+              
+                var userRefreshToken = refreshToken.GetUserRefreshToken(refreshTokenValue, user);
+                await context.aspnetusertokens.AddAsync(userRefreshToken);
                 context.SaveChanges();
-                string authorizationHeader = "Bearer " + Usertoken;
+                string authorizationHeader = "Bearer " + userToken;
                 HttpContext.Session.SetString("AuthToken", authorizationHeader);
                 return RedirectToAction("Useracount");
                 
@@ -194,6 +189,70 @@ namespace TraveLink.Controllers
 
         }
 
+        
+        public async Task<IActionResult> AutenticationAdmin(AppUserViewModel model)
+
+        {
+
+
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("AuthToken")))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+
+
+
+
+
+            if (model.Password == null || model.UserName == null)
+            {
+                return View(model);
+
+            }
+
+
+
+            var user = await context.aspnetusers.FirstOrDefaultAsync(u => u.UserName == model.UserName )??null;
+            var roleIds = await context.UserRoles
+               .Where(ur => ur.UserId == user.Id)
+               .Select(ur => ur.RoleId)
+               .ToListAsync()?? null ;
+            var roleNames = await context.Roles
+           .Where(r => roleIds.Contains(r.Id))
+           .Select(r => r.Name)
+           .ToListAsync()??null;
+            var adminRole = roleNames.FirstOrDefault(r => r == "Admin");
+            if (user != null && BCrypt.Net.BCrypt.Verify(model.Password, user.PasswordHash) &&  !string.IsNullOrEmpty(adminRole))
+            {
+                var usertoken = token.GenAccessToken(user, adminRole);
+                var refreshTokenValue = refreshToken.GenRefreshToken(user);
+                var userRefreshToken = refreshToken.GetUserRefreshToken(refreshTokenValue, user);
+               
+                await context.aspnetusertokens.AddAsync(userRefreshToken);
+                context.SaveChanges();
+                string authorizationHeader = "Bearer " + usertoken;
+                HttpContext.Session.SetString("AuthToken", authorizationHeader);
+                return RedirectToAction("Index","Admin");
+
+
+            }
+
+
+
+
+
+
+
+            else
+            {
+
+                ModelState.AddModelError("Username", "Incorrect User Name or Password");
+
+                return View( model);
+            }
+
+        }
 
         [Authorize]
         public async Task <IActionResult> UserAcount(HotelViewModel? model)

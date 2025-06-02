@@ -1,0 +1,42 @@
+﻿@model List<AppUserViewModel>
+
+
+
+    <div class="container-fluid">
+        
+     
+        
+        
+        
+        <div clasdiv  class="card h-20 mb-4 text-center"  style="max-height: 300px;  min-height:300px  ;width: 40%" >
+
+            
+             @foreach(AppUserViewModel user in Model)  {
+                 <ul>
+
+                    <li>ID  @user?.Id  </li>
+                    <li>Name  @user?.FirstName  </li>
+                    <li>Emale  @user?.Email  </li>
+                    <li>Phone  @user.PhoneNumber  </li>
+                       
+                       
+                      
+                      
+                   
+
+
+
+                 </ul>
+
+
+             }
+           
+        </div>
+
+
+
+      
+
+
+
+    </div>

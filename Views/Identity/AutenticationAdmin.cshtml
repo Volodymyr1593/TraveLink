@@ -1,0 +1,35 @@
+﻿
+@model TraveLink.Models.AppUserViewModel
+
+
+
+
+<div class="row">
+    <div class="col-6 my-3 " >
+        <div class="card">
+        <div class="card-body">
+       
+        <form class="row g-3 needs-validation"   asp-controller="Identity" asp-action="AutenticationAdmin" method="post">
+            <div>
+    
+                <label for="validationCustom" class="contro-label">Username</label>
+                 <input asp-for= "UserName" type= "text" class="form-control"  />
+                 <span asp-validation-for="UserName" class=text-danger  ></span>
+
+
+            </div>
+            <div>
+                 <label for="validationCustom" class="contro-label">Password</label>
+                 <input asp-for="Password" type= "text" class="form-control"  />
+                  <span asp-validation-for="Password" class=text-danger  ></span>
+            </div>
+
+          <div class="col-12">
+          <button class="btn btn-primary" type="submit">Submit </button>
+          </div>
+
+        </form>
+        </div>
+        </div>
+       </div>
+ </div>

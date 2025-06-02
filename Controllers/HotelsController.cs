@@ -20,7 +20,54 @@ namespace TraveLink.Controllers
         {
             var dataListJson = HttpContext.Session.GetString("dataListJson");
             var sesionHotelId = HttpContext.Session.GetInt32("sesionHotelId");
-            List<HotelRoomData>dataList = new List<HotelRoomData>();
+            var searchListHotel = HttpContext.Session.GetString("searchListHotel");
+           
+
+
+            if (id != null)
+            {
+
+
+                model = await context.hotels.FindAsync(id);
+
+
+            }
+
+
+            if (!string.IsNullOrEmpty(searchListHotel) && id != null)
+            {
+               var lisHotel = JsonConvert.DeserializeObject<List<HotelViewModel>>(searchListHotel);
+
+                var modelForId = lisHotel.Find(l => l.hotels_id == id);
+                if(modelForId != null) {    model = modelForId; }
+
+
+
+
+              
+                
+                
+                
+                
+                
+                
+                
+            
+
+            }
+
+
+
+
+
+
+
+          
+
+            
+          
+
+
 
             if (!string.IsNullOrEmpty(dataListJson))
 
@@ -29,44 +76,89 @@ namespace TraveLink.Controllers
 
 
 
-                 dataList = JsonConvert.DeserializeObject<List<HotelRoomData>>(dataListJson);
+                var dataList = JsonConvert.DeserializeObject<List<HotelRoomData>>(dataListJson);
+
+                if (dataList != null && sesionHotelId == id)
+                {
 
 
+                    model.roomDataModels = dataList;
 
+                }
 
-            }
-               
-                
-               if(id != null )
-            {
-
-
-                model = await context.hotels.FindAsync(id);
-                
-
-            }
-            if (dataList!= null&&sesionHotelId==id)
-            {
-
-
-                model.roomDataModels = dataList;
+                   
 
             }
 
 
 
-           
-
-            
-
-            
             return View(model);
 
 
 
+
+
+
+
+
         }
+
+
+        public  async Task <IActionResult> Search(HotelViewModel? model)
+        {
+
+            var searchListHotel = HttpContext.Session.GetString("searchListHotel")??"";
+
+            if (!string.IsNullOrEmpty(searchListHotel))
+            {
+
+                var searchListHotelJson = JsonConvert.DeserializeObject<List<HotelViewModel>>(searchListHotel);
+                return View(searchListHotelJson);
+
+            }
+
+
+            
+           if( !string.IsNullOrEmpty(model?.reserveModel.location))
+            {
+
+                var input = model.reserveModel.location.Trim().ToLower();
+
+                var parts = input.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+                  .Select(p => p.ToLower())
+                  .ToList();
+
+                var hotels = context.hotels
+                    .AsEnumerable() 
+                    .Where(h => parts.Count(p => h.address.ToLower().Contains(p)) >= 2)
+                    .ToList();
+
+
+                var hotelRooms = await hotelParce.MainSearchFilter(hotels, model);
+                var hotelRoomsJson = JsonConvert.SerializeObject(hotelRooms);
+                HttpContext.Session.SetString("searchListHotel", hotelRoomsJson);
+
+
+                return View(hotelRooms);
+
+            }
+
+            else
+            {
+                return View();
+            }
+
+
+  
         
-      public async Task<IActionResult> SearchInHotel(int id ,HotelViewModel model)
+        
+        }
+
+
+
+
+
+            public async Task<IActionResult> SearchInHotel(int id ,HotelViewModel model)
        {
 
 

@@ -11,16 +11,7 @@
 
        
         public TimeSpan AccessTokenLiveTime (string CurrentAccesstoken);
-
-       
-      
-       
-
-        
-
-
-
-
+        public string GenAccessToken(AppUserViewModel user, string adminRole);
     }
 
 }

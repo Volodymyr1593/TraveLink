@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿
+
+
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -17,11 +21,11 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-
+                <div class="navbar-collapse mt-2 collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1" style="width: 100px">
+                        
                 
-                           @if (!string.IsNullOrEmpty(Context.Session.GetString("AuthToken")))
+                           @if (User.Identity.IsAuthenticated)
                            {
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="userAccountDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -30,27 +34,75 @@
                                 <ul class="dropdown-menu" aria-labelledby="userAccountDropdown">
                                     <li><a class="dropdown-item" asp-controller="Identity" asp-action="UserAcount">Profile</a></li>
                                     <li><a class="dropdown-item" asp-controller="Identity" asp-action="LogOut">LogOut</a></li>
+                                    @if (User.IsInRole("Admin"))
+                                    {
+                                       <li><a class="dropdown-item" asp-controller="Admin" asp-action="Index">Admin</a></li> 
+                                    }
                                 </ul>
                             </li>
                             }
                                
-                            
-                          
+             
                            
-
-                           <li class="nav-item">
+                            
+                           <li class="nav-item " >
                             <a class="nav-link text-dark" asp-area="" asp-controller="Identity" asp-action="Index">Sign in</a>
                         </li>
-                       <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Hotels" asp-action="Index">Hotels</a>
-                        </li>
-                    </ul>
-                    
-                               
-                            
+                      
+                   
+              </ul>
+                 <div class="search-filter container  p-3 border rounded shadow " style="margin-right: 130px;width:78%" >
+   @await Component.InvokeAsync("SearchForm")
+</div>
+
+<script>
+    function changeGuests(type, value) {
+        let input = document.getElementById(type);
+        let newValue = Math.max(parseInt(input.value) + value, input.min);
+        input.value = newValue;
+    }
+    
+    function toggleOptions() {
+        let panel = document.getElementById("options-panel");
+        panel.style.display = panel.style.display === "none" ? "block" : "none";
+    }
+
+    function searchLocation() {
+        let query = document.getElementById('location').value;
+        if (query.length < 3) return; // Чекаємо, поки користувач введе хоча б 3 символи
+
+        fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${query}&accept-language=en`)
+            .then(response => response.json())
+            .then(data => {
+                let suggestions = document.getElementById('suggestions');
+                suggestions.innerHTML = ''; // Очищаємо попередні результати
+                
+                data.forEach(place => {
+                    let item = document.createElement('div');
+                    item.classList.add('list-group-item', 'list-group-item-action');
+                    item.innerText = place.display_name;
+                    item.onclick = function() {
+                        document.getElementById('location').value = place.display_name;
+                        suggestions.innerHTML = ''; // При виборі очищаємо підказки
+                    };
+                    suggestions.appendChild(item);
+                });
+            })
+            .catch(error => console.error('Error fetching location data:', error));
+    }
+</script>   
+
+
+
                 </div>
             </div>
+            
+
+
+
         </nav>
+        
+
     </header>
     <div class="container">
         @if (TempData["Message"]!= null ){
@@ -60,7 +112,7 @@
         }
 
 
-
+        
         <main role="main" class="pb-3">
             @RenderBody()
         </main>

@@ -20,7 +20,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(
 
 builder.Logging.AddFile(options =>
 
-{ options.RootPath = builder.Environment.ContentRootPath;
+{   options.RootPath = builder.Environment.ContentRootPath;
     options.BasePath = "Logs";
     options.DateFormat = "yyyyMMdd";
     options.CounterFormat = "000";
@@ -86,6 +86,7 @@ builder.Services.AddScoped<IRefreshTokenService, RefreshTokenService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<HotelParceService>();
 builder.Services.AddScoped<HotelListingService>();
+builder.Services.AddScoped<IAdminService, AdminService>();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {

@@ -10,6 +10,8 @@
         public string? checkoutdate { get;set;}  
         public string? room { get;set;} 
 
+        public string? location { get;set;} 
+
 
 
 

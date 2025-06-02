@@ -40,20 +40,19 @@
                 }
             }
         }
-        public  FormUrlEncodedContent CreateSearchFormContent (HtmlDocument document,HotelViewModel model)
+        public  FormUrlEncodedContent CreateSearchFormContent (HtmlDocument document,HotelViewModel? model)
 
         {
 
             if (document != null && model != null)
             {
 
-
-
+                
 
 
 
                
-                var formNode = document.DocumentNode.SelectSingleNode("//form [@class='fb7df01322']");
+                var formNode = document.DocumentNode.SelectSingleNode("//form [@class='b9a178a893']");
                 
                 if (formNode != null)
                 {
@@ -126,7 +125,7 @@
         public  async Task<string> SentSearchForm(HtmlDocument document,FormUrlEncodedContent content,HotelViewModel model)
         {
             if(document!=null&&content!=null){
-             var formNode = document.DocumentNode.SelectSingleNode("//form[@class='fb7df01322']");
+             var formNode = document.DocumentNode.SelectSingleNode("//form[@class='b9a178a893']");
              var formMethod = formNode.GetAttributeValue("method", "post").ToUpper();
          
                 var formAction = model.url;
@@ -177,21 +176,21 @@
                         
                     }
 
-                    string responseContent = await response.Content.ReadAsStringAsync();
+                   string responseContent = await response.Content.ReadAsStringAsync();
                    
-                    string tempFilePath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".html");
-                    File.WriteAllText(tempFilePath, responseContent);
+                   // string tempFilePath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".html");
+                    //File.WriteAllText(tempFilePath, responseContent);
 
                     // Відкриття файлу у браузері
-                    System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
-                    {
-                        FileName = tempFilePath,
-                        UseShellExecute = true
-                    });
+                   // System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+                   // {
+                       // FileName = tempFilePath,
+                        //UseShellExecute = true
+                    //});
 
                     // Видалення тимчасового файлу після перегляду
-                    await Task.Delay(5000); // Затримка на 10 секунд, щоб ви встигли переглянути сторінку
-                    File.Delete(tempFilePath);
+                   // await Task.Delay(5000); // Затримка на 10 секунд, щоб ви встигли переглянути сторінку
+                   // File.Delete(tempFilePath);
 
                     return responseContent;
 
@@ -210,7 +209,7 @@
         public  HotelRoomData GetHotelObjekt( HtmlNode row )
         {
 
-            HotelRoomData data = new HotelRoomData();
+           
 
 
 
@@ -218,13 +217,13 @@
             if (row != null)
             {
 
-               
+
+                HotelRoomData data = new HotelRoomData();
 
 
 
-                
-                var roomtype = row.SelectSingleNode(".//span[@class='hprt-roomtype-icon-link ']").InnerText.ToString();
-                if (roomtype!= null) {
+                var roomtype = row.SelectSingleNode(".//span[@class='hprt-roomtype-icon-link ']")?.InnerText.ToString()??null;
+                if (! string.IsNullOrEmpty(roomtype)) {
                     data.roomtype = roomtype;
                 }
                 else
@@ -238,12 +237,12 @@
                 
                 
                 
-                var prices = row.SelectSingleNode(".//span[@class='prco-valign-middle-helper']");
-                if (prices != null)
+                var prices = row.SelectSingleNode(".//span[@class='prco-valign-middle-helper']")?.InnerText.ToString() ?? null;
+                if (!string.IsNullOrEmpty(prices))
                 {
                    
 
-                    data.todayprice = prices.InnerText.ToString();
+                    data.todayprice = prices;
 
 
 
@@ -256,12 +255,9 @@
 
 
 
-                
-                var conditions = row.SelectNodes(".//td[@class= 'hprt-table-cell hprt-table-cell-conditions  droom_seperatorhprt-block-reposition-tooltip--container']");
-                if (conditions != null)
-                {
 
-
+                var conditions = row.SelectNodes(".//td[@class= 'hprt-table-cell hprt-table-cell-conditions  droom_seperatorhprt-block-reposition-tooltip--container']") ?? null;
+                if (conditions != null) { 
 
                     List<string> conditionlist = new List<string>();
                     foreach (var condition in conditions)
@@ -287,7 +283,7 @@
                     Console.WriteLine(" conditions not found");
                 }
 
-                var gests = row.SelectNodes(".//td[@class='hprt-table-cell hprt-table-cell-occupancy  droom_seperator']");
+                var gests = row.SelectNodes(".//td[@class='hprt-table-cell hprt-table-cell-occupancy  droom_seperator']")??null;
                 if (gests != null)
                 {
                     List<string> gestslist = new List<string>();
@@ -296,16 +292,14 @@
                         var gestobjekt = gest.InnerText.ToString();
                         gestslist.Add(gestobjekt);
                         data.gests = gestslist;
-                    }
-                    
-                    
 
+                    }
                 }
                 else
                 {
                     Console.WriteLine("gests not found");
                 }
-                var selectrooms = row.SelectSingleNode(".//td[contains(@class, 'hprt-table-room-select')]");
+                var selectrooms = row.SelectSingleNode(".//td[contains(@class, 'hprt-table-room-select')]")??null;
 
                 if (selectrooms != null)
                 { 
@@ -318,8 +312,15 @@
                 }
               
 
-
-                return data;    
+                if (data.selectrooms != null&& data.todayprice!=null)
+                {
+                    return data;
+                }
+                else
+                {
+                    return null;
+                }
+              
             }
             else
             {
@@ -351,7 +352,21 @@
                     foreach (var row in rows)
                     {
                        var td = GetHotelObjekt(row);
-                       data.Add (td);
+                      
+                        if( td != null)
+                        {
+                            data.Add(td);
+                        }
+                        else
+                        {
+                            continue;
+                        }
+
+
+
+
+
+
                     }
 
                     return data;
@@ -381,6 +396,85 @@
 
         }
 
+        public async Task< List<HotelViewModel>> MainSearchFilter(List<HotelViewModel>models,HotelViewModel?searchData)
+        {
+            if (models != null)
+            {
+                 List<HotelViewModel> hotels = new List<HotelViewModel>();
+               
+                foreach (var model in models)
+                {
+
+                    if(!string.IsNullOrEmpty(model.url))
+                    {
+
+                        var document = await GethtmlHotelDocument(model.url)?? null;
+                        var formContent = CreateSearchFormContent(document, searchData)?? null;
+                        var responseContent = await SentSearchForm(document, formContent, model) ?? null;
+                        var orderData = GetDataTableFromHotel(responseContent)??null;
+                        if ( orderData != null)
+                        {
+                            model.roomDataModels = orderData;
+                            hotels.Add(model);
+                        }
+
+
+                        else
+                        { 
+                            continue;
+                        }
+
+
+
+
+
+
+
+
+
+                    }
+                    else
+                    {
+                        break;
+                    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                }
+
+
+                return hotels;
+
+
+            }
+            else
+            {
+                 List<HotelViewModel>emptymodels = new List<HotelViewModel>();
+                return emptymodels;
+            }
+            
+            
+            
+            
+            
+            
+            
+            
+            
+         
+        }    
 
 
 
