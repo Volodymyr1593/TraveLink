@@ -1,0 +1,45 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32526.322
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TraveLink", "TraveLink.csproj", "{03D05E6A-2927-489C-8513-37D4CB9C094B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lesson", "..\Lesson\Lesson.csproj", "{D0F775BE-EAE3-4CD2-9C77-DB5AFE437DEC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Элементы решения", "Элементы решения", "{B41E146D-5488-499F-A1DF-F810697B46FE}"
+	ProjectSection(SolutionItems) = preProject
+		..\.editorconfig = ..\.editorconfig
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TraveLink.Tests", "..\TraveLink.Tests\TraveLink.Tests.csproj", "{6D9BBBF5-7594-41E2-9800-376264E4DF5A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{03D05E6A-2927-489C-8513-37D4CB9C094B} = {03D05E6A-2927-489C-8513-37D4CB9C094B}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{03D05E6A-2927-489C-8513-37D4CB9C094B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03D05E6A-2927-489C-8513-37D4CB9C094B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03D05E6A-2927-489C-8513-37D4CB9C094B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03D05E6A-2927-489C-8513-37D4CB9C094B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0F775BE-EAE3-4CD2-9C77-DB5AFE437DEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0F775BE-EAE3-4CD2-9C77-DB5AFE437DEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0F775BE-EAE3-4CD2-9C77-DB5AFE437DEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0F775BE-EAE3-4CD2-9C77-DB5AFE437DEC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D9BBBF5-7594-41E2-9800-376264E4DF5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D9BBBF5-7594-41E2-9800-376264E4DF5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D9BBBF5-7594-41E2-9800-376264E4DF5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D9BBBF5-7594-41E2-9800-376264E4DF5A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1BC51F83-112E-42BF-BA55-675A4BF26BD8}
+	EndGlobalSection
+EndGlobal
